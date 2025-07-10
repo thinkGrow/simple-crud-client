@@ -32,6 +32,19 @@ const Users = ({ usersPromise }) => {
         }
       });
   };
+
+  const handleUserDelete = (id) => {
+    console.log("delete this user", id);
+    fetch(`http://localhost:3000/users/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // const remainingUsers = users.filter((user) => user._id !== id);
+        // setUsers(remainingUsers);
+        console.log("after delete", data);
+      });
+  };
   return (
     <div>
       <h2>Users</h2>
@@ -50,6 +63,7 @@ const Users = ({ usersPromise }) => {
         {users.map((user) => (
           <p key={user._id}>
             {user.name} : {user.email}{" "}
+            <button onClick={() => handleUserDelete(user._id)}>x</button>
           </p>
         ))}
       </div>
