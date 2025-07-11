@@ -40,14 +40,16 @@ const Users = ({ usersPromise }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // const remainingUsers = users.filter((user) => user._id !== id);
-        // setUsers(remainingUsers);
-        console.log("after delete", data);
+        if (data.deletedCount) {
+          const remainingUsers = users.filter((user) => user._id !== id);
+          setUsers(remainingUsers);
+          console.log("after delete", data);// data is the response from the server
+        }
       });
   };
   return (
     <div>
-      <h2>Users</h2>
+      <h2>Users : {users.length}</h2>
       {/* add user */}
       <div>
         <form onSubmit={handleAddUser}>
