@@ -1,4 +1,5 @@
 import React, { use, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Users = ({ usersPromise }) => {
   const initialUsers = use(usersPromise);
@@ -43,7 +44,7 @@ const Users = ({ usersPromise }) => {
         if (data.deletedCount) {
           const remainingUsers = users.filter((user) => user._id !== id);
           setUsers(remainingUsers);
-          console.log("after delete", data);// data is the response from the server
+          console.log("after delete", data); // data is the response from the server
         }
       });
   };
@@ -65,6 +66,7 @@ const Users = ({ usersPromise }) => {
         {users.map((user) => (
           <p key={user._id}>
             {user.name} : {user.email}{" "}
+            <Link to={`/users/${user._id}`}>Details </Link>
             <button onClick={() => handleUserDelete(user._id)}>x</button>
           </p>
         ))}

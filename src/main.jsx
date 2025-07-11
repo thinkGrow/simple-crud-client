@@ -1,10 +1,31 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.jsx";
 
-createRoot(document.getElementById('root')).render(
+import { createBrowserRouter, RouterProvider } from "react-router";
+import MainLayout from "./layouts/MainLayout.jsx";
+import UserDetail from "./components/UserDetail.jsx";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    Component: MainLayout,
+    children: [
+      { index: true, Component: App },
+      {
+        path: "users/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/users/${params.id}`),
+        Component: UserDetail,
+      },
+    ],
+  },
+]);
+
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-)
+    <RouterProvider router={router} />
+    {/* <App router={router}/> */}
+  </StrictMode>
+);
